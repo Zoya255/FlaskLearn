@@ -12,3 +12,11 @@
 - author of project
 - create a repository
 - add first lesson
+
+## 07.03.2021
+
+*Sergo*
+
+- add lesson 2
+- update study project
+- update README
