@@ -1,0 +1,72 @@
+/* ------------------------------- global ------------------------------- */
+
+/* -------------------- base -------------------- */
+
+.global__body{
+	margin: 0;
+	padding: 0;
+
+	font-family: sans-serif;
+
+	color: #cccccc;
+	background-color: #272822;
+}
+
+/* -------------------- header -------------------- */
+
+.global__header{
+	display: flex;
+	flex-direction: row;
+
+	margin: 1em 1.25em;
+}
+.global__header-logo{
+	margin: 0;
+	margin-right: 0.75em;
+}
+.global__header-delimiter{
+	flex-grow: 1;
+}
+.global__header-user{
+	margin: auto 0;
+}
+
+/* -------------------- nav -------------------- */
+
+.global__nav{
+	margin: auto 0;
+}
+.global__nav-link{
+	padding: 5px 8px;
+	margin: 0 4px;
+
+	text-decoration: none;
+	font-size: 1.2em;
+
+	border-radius: 4px;
+
+	color: #cccccc;
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* -------------------- main -------------------- */
+
+.global__main{
+	margin: 1em 1.25em;
+}
+
+
+h1, h2{
+	font-family: Comfortaa, cursive;
+}
+
+hr{
+	border: none;
+	border-top: 1px solid #666666;
+}
+
+/* -------------------- footer -------------------- */
+
+.global__footer{
+	margin: 1em 1.25em;
+}

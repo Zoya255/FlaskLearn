@@ -4,26 +4,45 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		{% if info %}
 		<title>{{ info.title }} - MicroBlog</title>
-		{% else %}
-		<title>MicroBlog</title>
-		{% endif %}
+
+		<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/global.css' ) }}">
+
+		{% block links %}{% endblock %}
 	</head>
 
-	<body>
-		<h1>MicroBlog</h1>
+	<body class="global__body">
+		<header class="global__header">
+			<h1 class="global__header-logo">MicroBlog</h1>
 
-		<h2>Привет, {{ user.name }}! Это мой первый сайт на Flask.</h2>
+			<nav class="global__nav">
+				<a class="global__nav-link" href="/index">home</a>
+				<a class="global__nav-link" href="/login">login</a>
+
+				|
+
+				<a class="global__nav-link" href="/info">info</a>
+				<a class="global__nav-link" href="/test">test</a>
+				<a class="global__nav-link" href="/user/1">about me</a>
+			</nav>
+
+			<span class="global__header-delimiter"></span>
+
+			<span class="global__header-user">{{ user.name }}</span>
+		</header>
 
 		<hr>
 
-		{% block content %}{% endblock %}
+		<main class="global__main">
+			{% block content %}{% endblock %}
+		</main>
 
 		<hr>
 
-		<p>MicroBlog by SI<p>
-		<p>2021</p>
+		<footer class="global__footer">
+			<p>MicroBlog by SI<p>
+			<p>2021</p>
+		</footer>
 	</body>
 </html>
 

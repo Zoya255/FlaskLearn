@@ -1,13 +1,30 @@
 {% extends "base.html" %}
 
+
+{% block links %}
+
+	<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/page/index.css' ) }}">
+
+{% endblock %}
+
+
 {% block content %}
 
-<h2>Крч, тут есть вот такие статьи:</h2>
+	<h2>Представленные статьи:</h2>
 
-<ul>
 	{% for post in posts %}
-	<li><h3>{{ post.author }} - {{ post.title }}</h3></li>
+
+		<div class="global__post">
+			<h3 class="global__post-title">{{ post.title }}</h3>
+
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cumque debitis delectus dolore earum et iste
+				laborum molestiae molestias, nisi odio odit perferendis quod saepe sapiente similique sint sit, ullam.
+			</p>
+
+			<span class="global__post-author">by {{ post.author }}</span>
+		</div>
+
 	{% endfor %}
-</ul>
 
 {% endblock %}

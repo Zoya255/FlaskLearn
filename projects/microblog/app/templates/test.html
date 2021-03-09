@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<pre>
+url: {{ request.url }}
+ip: {{ request.remote_addr }}
+useragent: {{ request.user_agent }}
+</pre>
+{% endblock %}
