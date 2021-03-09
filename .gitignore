@@ -1,3 +1,6 @@
-*/__pycache__/
 */.idea/
+__pycache__
+projects/microblog/.env
+projects/microblog/.hidden
 projects/microblog/.idea/
+projects/microblog/venv/
