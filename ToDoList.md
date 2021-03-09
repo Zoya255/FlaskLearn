@@ -20,3 +20,10 @@
 - add lesson 2
 - update study project
 - update README
+
+## 09.03.2021
+
+*Sergo*
+
+- add lesson 3
+- update study project
