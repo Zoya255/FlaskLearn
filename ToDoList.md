@@ -33,5 +33,7 @@
 
 *Sergo*
 
+- add lesson 4
 - update study project
 - update README
+- clear index VCS
