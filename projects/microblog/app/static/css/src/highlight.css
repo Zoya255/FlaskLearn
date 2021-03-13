@@ -1,0 +1,34 @@
+/* ------------------------------- highlight ------------------------------- */
+
+/* -------------------- colors -------------------- */
+
+.debug{
+	font-family: Consolas, monospace;
+	font-weight: lighter;
+
+	color: #aaaaaa;
+}
+.info{
+	font-family: Consolas, monospace;
+	font-weight: normal;
+
+	color: #cccccc;
+}
+.success{
+	font-family: Consolas, monospace;
+	font-weight: normal;
+
+	color: #329932;
+}
+.warn{
+	font-family: Consolas, monospace;
+	font-weight: bold;
+
+	color: #c98236;
+}
+.error{
+	font-family: Consolas, monospace;
+	font-weight: bold;
+
+	color: #c93836;
+}

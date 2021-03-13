@@ -1,7 +1,9 @@
-from flask import render_template, request
+from flask import render_template, request, send_from_directory, flash, redirect, url_for
 from app import app
 from app.forms import LoginForm
 
+
+# ------------------------ main page ------------------------ #
 
 @app.route('/')
 @app.route('/index')
@@ -38,6 +40,25 @@ def index():
 	return render_template( "index.html", info = info, user = user, posts = posts )
 
 
+# ------------------------ login page ------------------------ #
+
+@app.route('/login', methods = ['GET', 'POST'])
+def login_form():
+	info = {
+		'title': 'Вход в систему'
+	}
+	user = {
+		'name': 'Халва'
+	}
+	form = LoginForm()
+
+	if form.validate_on_submit():
+		flash(f"Login requested for user {form.username.data}, remember me {form.remember_me.data}")
+		return redirect( url_for("index") )
+
+	return render_template( "login.html", info = info, user = user, form = form )
+
+
 @app.route('/info')
 def info():
 	info = {
@@ -51,6 +72,8 @@ def info():
 
 	return render_template("info.html", info = info, user = user, data = data)
 
+
+# ------------------------ test pages ------------------------ #
 
 @app.route('/user/<int:user_id>/')
 def user(user_id):
@@ -67,7 +90,7 @@ def user(user_id):
 
 
 @app.route('/test')
-def requestdata():
+def request_data():
 	info = {
 		'title': 'Стартовая страница'
 	}
@@ -89,3 +112,12 @@ def login():
 	form = LoginForm()
 
 	return render_template( "login.html", info = info, user = user, form = form )
+
+
+# ------------------------ technical pages ------------------------ #
+
+@app.route('/favicon.ico')
+@app.route('/robots.txt')
+@app.route('/sitemap.xml')
+def static_from_root():
+	return send_from_directory(app.static_folder, request.path[1:])

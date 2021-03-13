@@ -1,0 +1,2 @@
+# For all user agents
+User-agent: *

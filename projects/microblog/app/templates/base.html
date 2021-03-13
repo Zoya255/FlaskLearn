@@ -6,7 +6,10 @@
 
 		<title>{{ info.title }} - MicroBlog</title>
 
-		<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/global.css' ) }}">
+		<link rel="icon" href="{{ url_for( 'static', filename = 'favicon.ico' ) }}" type="image/x-icon">
+
+		<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/min/global.min.css' ) }}">
+		<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/min/highlight.min.css' ) }}">
 
 		{% block links %}{% endblock %}
 	</head>
@@ -16,8 +19,8 @@
 			<h1 class="global__header-logo">MicroBlog</h1>
 
 			<nav class="global__nav">
-				<a class="global__nav-link" href="/index">home</a>
-				<a class="global__nav-link" href="/login">login</a>
+				<a class="global__nav-link" href="{{ url_for("index") }}">home</a>
+				<a class="global__nav-link" href="{{ url_for("login") }}">login</a>
 
 				|
 
@@ -26,7 +29,7 @@
 				<a class="global__nav-link" href="/user/1">about me</a>
 			</nav>
 
-			<span class="global__header-delimiter"></span>
+			<span class="global__header-delimiter">|</span>
 
 			<span class="global__header-user">{{ user.name }}</span>
 		</header>
@@ -36,6 +39,24 @@
 		<main class="global__main">
 			{% block content %}{% endblock %}
 		</main>
+
+		{% with flashes = get_flashed_messages() %}
+		{% if flashes %}
+
+		<hr>
+
+		<div class="global__flash">
+			<h2>Уведомления для вас:</h2>
+
+			<ul>
+				{% for flash in flashes %}
+				<li class="info">{{ flash }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+
+		{% endif %}
+		{% endwith %}
 
 		<hr>
 

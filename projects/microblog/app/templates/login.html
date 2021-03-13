@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 
+
+{% block links %}
+
+	<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/min/login.min.css' ) }}">
+
+{% endblock %}
+
+
 {% block content %}
+
     <h2>Sign In</h2>
 
     <form action="" method="post" novalidate>
@@ -9,11 +18,19 @@
         <p>
             {{ form.username.label }}<br>
             {{ form.username(size=32) }}
+
+			{% for error in form.username.errors %}
+            	<span class="error">[{{ error }}]</span>
+            {% endfor %}
         </p>
 
         <p>
             {{ form.password.label }}<br>
             {{ form.password(size=32) }}
+
+			{% for error in form.username.errors %}
+            	<span class="error">[{{ error }}]</span>
+            {% endfor %}
         </p>
 
         <p>
@@ -24,4 +41,5 @@
             {{ form.submit() }}
         </p>
     </form>
+
 {% endblock %}
