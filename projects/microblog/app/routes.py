@@ -1,18 +1,19 @@
 from flask import render_template, request, send_from_directory, flash, redirect, url_for
-from app import app
-from app.forms import LoginForm
+from flask_login import current_user, login_user, logout_user, login_required
+from app import app, db
+from app.forms import LoginForm, RegistrationForm
+from app.models import User
+from werkzeug.urls import url_parse
 
 
 # ------------------------ main page ------------------------ #
+
 
 @app.route('/')
 @app.route('/index')
 def index():
 	info = {
 		'title': 'Стартовая страница'
-	}
-	user = {
-		'name': 'Халва'
 	}
 	posts = [
 		{
@@ -37,56 +38,84 @@ def index():
 		},
 	]
 
-	return render_template( "index.html", info = info, user = user, posts = posts )
+	return render_template( "index.html", info = info, posts = posts )
 
 
-# ------------------------ login page ------------------------ #
+# ------------------------ login system ------------------------ #
+
 
 @app.route('/login', methods = ['GET', 'POST'])
-def login_form():
+def login():
 	info = {
 		'title': 'Вход в систему'
 	}
-	user = {
-		'name': 'Халва'
-	}
+
+	if current_user.is_authenticated:
+		return redirect( url_for("index") )
+
 	form = LoginForm()
 
 	if form.validate_on_submit():
-		flash(f"Login requested for user {form.username.data}, remember me {form.remember_me.data}")
+		user = User.query.filter_by( login = form.login.data ).first()
+
+		if user is None or not user.check_password( form.password.data ):
+			flash("Invalid login or password")
+			return redirect( url_for("login") )
+
+		login_user( user, remember = form.remember_me.data )
+		next_page = request.args.get( "next" )
+
+		if not next_page or url_parse( next_page ).netloc != '':
+			next_page = url_for( "index" )
+
+		return redirect( next_page )
+
+	return render_template( "login.html", info = info, form = form )
+
+
+@app.route('/register', methods = ['GET', 'POST'])
+def register():
+	info = {
+		'title': 'Регистрация'
+	}
+
+	if current_user.is_authenticated:
 		return redirect( url_for("index") )
 
-	return render_template( "login.html", info = info, user = user, form = form )
+	form = RegistrationForm()
+
+	if form.validate_on_submit():
+		user = User( login = form.login.data, email = form.email.data,
+		             name = form.name.data, lastname = form.lastname.data )
+		user.set_password( password = form.password.data )
+
+		db.session.add(user)
+		db.session.commit()
+
+		flash( "Congratulations, you are now a registered user!" )
+		return redirect( url_for("login") )
+
+	return render_template( "register.html", info = info, form = form )
 
 
-@app.route('/info')
-def info():
-	info = {
-		'title': 'Стартовая страница'
-	}
-	user = {
-		'name': 'Халва'
-	}
-
-	data = f"Тут есть важная инфа: {app.config['SECRET_KEY']}"
-
-	return render_template("info.html", info = info, user = user, data = data)
+@app.route('/logout')
+def logout():
+	logout_user()
+	return redirect(url_for( "index" ))
 
 
 # ------------------------ test pages ------------------------ #
 
-@app.route('/user/<int:user_id>/')
-def user(user_id):
+
+@app.route('/user')
+def user():
 	info = {
 		'title': 'Стартовая страница'
 	}
-	user = {
-		'name': 'Халва'
-	}
 
-	data = f"Hello, {user_id}"
+	data = f"Hello, {current_user.login}"
 
-	return render_template("info.html", info = info, user = user, data = data)
+	return render_template("info.html", info = info, data = data)
 
 
 @app.route('/test')
@@ -94,27 +123,23 @@ def request_data():
 	info = {
 		'title': 'Стартовая страница'
 	}
-	user = {
-		'name': 'Халва'
-	}
 
-	return render_template( "test.html", info = info, user = user, request = request )
+	return render_template( "test.html", info = info, request = request )
 
 
-@app.route('/login')
-def login():
+@app.route('/info')
+def info():
 	info = {
-		'title': 'Вход в систему'
+		'title': 'Стартовая страница'
 	}
-	user = {
-		'name': 'Халва'
-	}
-	form = LoginForm()
 
-	return render_template( "login.html", info = info, user = user, form = form )
+	data = f"Тут есть важная инфа: {app.config['SECRET_KEY']}"
+
+	return render_template("info.html", info = info, data = data)
 
 
 # ------------------------ technical pages ------------------------ #
+
 
 @app.route('/favicon.ico')
 @app.route('/robots.txt')

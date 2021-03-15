@@ -3,7 +3,7 @@
 
 {% block links %}
 
-	<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/min/login.min.css' ) }}">
+	<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/min/form.min.css' ) }}">
 
 {% endblock %}
 
@@ -16,20 +16,20 @@
         {{ form.hidden_tag() }}
 
         <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
+            {{ form.login.label }}<br>
+            {{ form.login(size=32, maxlength=32, placeholder="Username...") }}
 
-			{% for error in form.username.errors %}
-            	<span class="error">[{{ error }}]</span>
+			{% for error in form.login.errors %}
+            	<span class="check error">[{{ error }}]</span>
             {% endfor %}
         </p>
 
         <p>
             {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
+            {{ form.password(size=32, maxlength=64, placeholder="********") }}
 
-			{% for error in form.username.errors %}
-            	<span class="error">[{{ error }}]</span>
+			{% for error in form.password.errors %}
+            	<span class="check error">[{{ error }}]</span>
             {% endfor %}
         </p>
 
@@ -40,6 +40,13 @@
         <p>
             {{ form.submit() }}
         </p>
+
+		<p>
+			New User?
+			<a href="{{ url_for('register') }}">
+				Click to Register!
+			</a>
+		</p>
     </form>
 
 {% endblock %}
