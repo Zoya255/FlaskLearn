@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+
+{% block links %}
+
+	<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/min/user.min.css' ) }}">
+
+{% endblock %}
+
+
+{% block content %}
+
+	<section class="user__section-main">
+		<div class="user__section-main-avatar">
+			<img class="user__section-main-avatar-image"
+				 src="{{ user.avatar(256) }}" alt="{{ user.login }}`s avatar">
+		</div>
+
+		<div class="user__section-main-fields">
+			<h2 class="user__section-main-login">{{ user.login }}</h2>
+
+			<h3 class="user__section-main-name">{{ user.lastname }} {{ user.name }}</h3>
+
+			{% if (user.sex == "M") %}
+				<p class="user__section-main-sex"><b>Пол:</b>
+					Муж
+				</p>
+			{% endif %}
+
+			{% if (user.sex == "F") %}
+				<p class="user__section-main-sex"><b>Пол:</b>
+					Жен
+				</p>
+			{% endif %}
+
+			{% if user.description %}
+				<p class="user__section-main-desc"><b>Кратко о себе:</b> {{ user.description }}</p>
+			{% endif %}
+
+			{% if user.datetime_last %}
+				<p class="user__section-main-last"><b>Последний вход:</b> {{ user.datetime_last }}</p>
+			{% endif %}
+
+			<p class="user__section-main-date"><b>Дата регистрации:</b> {{ user.datetime_reg }}</p>
+
+			{% if user == current_user %}
+				<p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
+            {% endif %}
+		</div>
+	</section>
+
+	<section class="user__section-posts">
+		<h2>Все посты пользователя {{ user.name }}:</h2>
+
+		{% if posts %}
+			{% for post in posts %}
+
+				<div class="global__post">
+					<h3 class="global__post-title">{{ post.title }}</h3>
+
+					<p>{{ post.message }}</p>
+
+					<span class="global__post-author">by {{ post.author }}</span>
+				</div>
+
+			{% endfor %}
+		{% else %}
+
+			<h3>Постов нет</h3>
+
+		{% endif %}
+	</section>
+
+{% endblock %}

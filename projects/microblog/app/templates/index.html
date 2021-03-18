@@ -17,12 +17,9 @@
 		<div class="global__post">
 			<h3 class="global__post-title">{{ post.title }}</h3>
 
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cumque debitis delectus dolore earum et iste
-				laborum molestiae molestias, nisi odio odit perferendis quod saepe sapiente similique sint sit, ullam.
-			</p>
+			<p>{{ post.message }}</p>
 
-			<span class="global__post-author">by {{ post.author }}</span>
+			<span class="global__post-author"><a href="/user/{{ post.author }}">by {{ post.author }}</a></span>
 		</div>
 
 	{% endfor %}

@@ -1,0 +1,40 @@
+/* ------------------------------- global ------------------------------- */
+
+/* -------------------- section -------------------- */
+
+.user__section-main{
+	display: grid;
+
+	grid-template-areas: "us-avatar us-fields";
+	grid-template-columns: auto 1fr;
+	grid-template-rows: 1fr;
+}
+.user__section-main-avatar{
+	grid-area: us-avatar;
+}
+.user__section-main-avatar-image{
+	margin-right: 20px;
+
+	border-radius: 50%;
+}
+.user__section-main-fields{
+	grid-area: us-fields;
+}
+.user__section-main-login{
+	margin: 0;
+}
+.user__section-main-name{
+	margin-bottom: 0;
+}
+.user__section-main-sex{
+	margin-bottom: 0;
+}
+.user__section-main-desc{
+	margin-bottom: 0;
+}
+.user__section-main-last{
+	margin-bottom: 0;
+}
+.user__section-main-date{
+	margin-bottom: 0;
+}

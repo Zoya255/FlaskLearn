@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+
+{% block links %}
+
+	<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/min/form.min.css' ) }}">
+
+{% endblock %}
+
+
+{% block content %}
+
+	<h2>Edit profile</h2>
+
+	<form action="" method="post" novalidate>
+		{{ form.hidden_tag() }}
+
+		<p>
+			{{ form.login.label }}<br>
+            {{ form.login(size=32, maxlength=32, placeholder="Name...") }}
+
+			{% for error in form.login.errors %}
+            	<span class="check error">[{{ error }}]</span>
+            {% endfor %}
+		</p>
+
+		<p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=32, maxlength=32, placeholder="Name...") }}
+
+			{% for error in form.name.errors %}
+            	<span class="check error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+		<p>
+            {{ form.lastname.label }}<br>
+            {{ form.lastname(size=32, maxlength=32, placeholder="Lastname...") }}
+
+			{% for error in form.lastname.errors %}
+            	<span class="check error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+		<p>
+            {{ form.description.label }}<br>
+            {{ form.description(cols=40, rows=7, maxlength=256, placeholder="I am...") }}
+
+			{% for error in form.description.errors %}
+            	<span class="check error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+		<p>
+            {{ form.sex.label }}<br>
+			{{ form.sex }}
+
+			{% for error in form.sex.errors %}
+            	<span class="check error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+		<p>
+            {{ form.submit() }}
+        </p>
+	</form>
+
+{% endblock	%}

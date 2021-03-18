@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, TextAreaField, PasswordField, BooleanField, SubmitField, RadioField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User
 import re
@@ -47,3 +47,20 @@ class RegistrationForm(FlaskForm):
 		if re.search('[^A-Za-z0-9]', password.data) is None:
 			raise ValidationError("Use special chars in password")
 
+
+class EditProfileForm(FlaskForm):
+	login       = StringField( "Login", validators = [ DataRequired(), Length( min=2, max=32 ) ] )
+	name        = StringField( "Name", validators = [ DataRequired(), Length( min=2, max=32 ) ] )
+	lastname    = StringField( "Lastname", validators = [ DataRequired(), Length( min=2, max=32 ) ] )
+	description = TextAreaField( "Description", validators = [ DataRequired(), Length( min=0, max=256 ) ] )
+	sex         = RadioField( "Sex", choices = [ ("M", "Male"), ("F", "Female"), ("N", "None") ],
+	                                 validators = [ DataRequired() ] )
+	submit      = SubmitField( "Apply" )
+
+	def validate_login( self, login ):
+		user = User.query.filter_by( login = login.data ).first()
+		if user is not None:
+			raise ValidationError("Please use a different login")
+
+		if re.search( '\W', login.data ):
+			raise ValidationError( "Use only A-Z, a-z, 0-9 and _" )

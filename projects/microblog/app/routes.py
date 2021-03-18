@@ -1,9 +1,10 @@
 from flask import render_template, request, send_from_directory, flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, EditProfileForm
+from app.models import User, Post
 from werkzeug.urls import url_parse
+from datetime import datetime
 
 
 # ------------------------ main page ------------------------ #
@@ -12,33 +13,9 @@ from werkzeug.urls import url_parse
 @app.route('/')
 @app.route('/index')
 def index():
-	info = {
-		'title': 'Стартовая страница'
-	}
-	posts = [
-		{
-			'author': 'John',
-			'title': 'Avengers'
-		},
-		{
-			'author': 'John',
-			'title': 'Avengers: Age of Altron'
-		},
-		{
-			'author': 'John',
-			'title': 'Avengers: Infinity War'
-		},
-		{
-			'author': 'John',
-			'title': 'Avengers: Endgame'
-		},
-		{
-			'author': 'Scout',
-			'title': 'Notes about Portland'
-		},
-	]
+	posts = Post.query.all()
 
-	return render_template( "index.html", info = info, posts = posts )
+	return render_template( "index.html", title = 'Главная', posts = posts )
 
 
 # ------------------------ login system ------------------------ #
@@ -46,10 +23,6 @@ def index():
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
-	info = {
-		'title': 'Вход в систему'
-	}
-
 	if current_user.is_authenticated:
 		return redirect( url_for("index") )
 
@@ -70,15 +43,11 @@ def login():
 
 		return redirect( next_page )
 
-	return render_template( "login.html", info = info, form = form )
+	return render_template( "login.html", title = 'Вход в систему', form = form )
 
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
-	info = {
-		'title': 'Регистрация'
-	}
-
 	if current_user.is_authenticated:
 		return redirect( url_for("index") )
 
@@ -95,47 +64,68 @@ def register():
 		flash( "Congratulations, you are now a registered user!" )
 		return redirect( url_for("login") )
 
-	return render_template( "register.html", info = info, form = form )
+	return render_template( "register.html", title = 'Регистрация', form = form )
 
 
 @app.route('/logout')
 def logout():
 	logout_user()
-	return redirect(url_for( "index" ))
+	return redirect( url_for( "index" ) )
+
+
+# ------------------------ functional pages ------------------------ #
+
+
+@app.route('/user/<login>')
+def user(login):
+	user = User.query.filter_by( login = login ).first_or_404()
+	posts = Post.query.filter_by( id_user = user.id ).all()
+
+	return render_template( "user.html", title = f'{login}', user = user, posts = posts )
+
+
+@app.route('/edit_profile', methods = ['GET', 'POST'])
+@login_required
+def edit_profile():
+	form = EditProfileForm()
+
+	if form.validate_on_submit():
+		current_user.login       = form.login.data
+		current_user.name        = form.name.data
+		current_user.lastname    = form.lastname.data
+		current_user.description = form.description.data
+		current_user.sex         = form.sex.data
+
+		db.session.commit()
+		flash( "Success update profile" )
+		return redirect( url_for( 'edit_profile' ) )
+
+	elif request.method == 'GET':
+		form.login.data       = current_user.login
+		form.name.data        = current_user.name
+		form.lastname.data    = current_user.lastname
+		form.description.data = current_user.description
+		form.sex.data         = current_user.sex
+
+	return render_template( "settings.html", title = 'Изменение профиля', form = form )
+
+
+# ------------------------ api pages ------------------------ #
 
 
 # ------------------------ test pages ------------------------ #
 
 
-@app.route('/user')
-def user():
-	info = {
-		'title': 'Стартовая страница'
-	}
-
-	data = f"Hello, {current_user.login}"
-
-	return render_template("info.html", info = info, data = data)
-
-
 @app.route('/test')
 def request_data():
-	info = {
-		'title': 'Стартовая страница'
-	}
-
-	return render_template( "test.html", info = info, request = request )
+	return render_template( "test.html", title = 'Тест' )
 
 
 @app.route('/info')
 def info():
-	info = {
-		'title': 'Стартовая страница'
-	}
-
 	data = f"Тут есть важная инфа: {app.config['SECRET_KEY']}"
 
-	return render_template("info.html", info = info, data = data)
+	return render_template( "info.html", title = 'Информация', data = data )
 
 
 # ------------------------ technical pages ------------------------ #
@@ -146,3 +136,20 @@ def info():
 @app.route('/sitemap.xml')
 def static_from_root():
 	return send_from_directory(app.static_folder, request.path[1:])
+
+
+@app.errorhandler(404)
+def error_404(e):
+	return render_template("404.html", title = 'Ошибка 404'), 404
+
+
+@app.errorhandler(500)
+def error_500(e):
+	return render_template("500.html", title = 'Ошибка 500'), 500
+
+
+@app.before_request
+def before_request():
+	if current_user.is_authenticated:
+		current_user.datetime_last = datetime.utcnow()
+		db.session.commit()

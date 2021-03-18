@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<h2 class="error">Ошибка 404: страница не найдена</h2>
+
+	<p>Ваш текущий адрес: <code>{{ request.url }}</code></p>
+
+	<p>Возможно, вы где-то ошиблись. Попробуйте ещё раз, или <a href="{{ url_for('index') }}">вернитесь на главную</a>.</p>
+
+{% endblock %}

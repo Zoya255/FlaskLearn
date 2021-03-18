@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<title>{{ info.title }} - MicroBlog</title>
+		<title>{{ title }} - MicroBlog</title>
 
 		<link rel="icon" href="{{ url_for( 'static', filename = 'favicon.ico' ) }}" type="image/x-icon">
 
@@ -20,19 +20,19 @@
 
 			<nav class="global__nav">
 				<a class="global__nav-link" href="{{ url_for("index") }}">home</a>
-
+				|
 				{% if current_user.is_authenticated %}
 					<a class="global__nav-link" href="{{ url_for("logout") }}">logout</a>
+					|
+					<a class="global__nav-link" href="/user/{{ current_user.login }}">about me</a>
+					<a class="global__nav-link" href="{{ url_for("edit_profile") }}">settings</a>
 				{% else %}
 					<a class="global__nav-link" href="{{ url_for("login")    }}">login</a>
 					<a class="global__nav-link" href="{{ url_for("register") }}">register</a>
 				{% endif %}
-
 				|
-
 				<a class="global__nav-link" href="/info">info</a>
 				<a class="global__nav-link" href="/test">test</a>
-				<a class="global__nav-link" href="/user/1">about me</a>
 			</nav>
 
 			<span class="global__header-delimiter">|</span>

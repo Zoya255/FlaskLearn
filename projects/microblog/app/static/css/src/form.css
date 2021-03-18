@@ -27,7 +27,8 @@ textarea:focus,
 input:focus{
 	border: 1px solid #ffFFFF;
 }
-input[type=checkbox] {
+input[type=checkbox],
+input[type=radio] {
 	display: inline-block;
 }
 input[type=submit] {

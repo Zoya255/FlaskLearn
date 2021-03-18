@@ -69,6 +69,33 @@ hr{
 	border-top: 1px solid #666666;
 }
 
+a{
+	text-decoration: none;
+
+	color: #84c3be;
+}
+
+code{
+	font-size: 1.15em;
+}
+
+/* -------------------- posts -------------------- */
+
+.global__post{
+	padding: 0 20px 10px;
+	margin-bottom: 20px;
+
+	width: 50%;
+
+	border: 1px solid #666666;
+}
+.global__post-title{
+	font-family: Comfortaa, cursive;
+}
+.global__post-author{
+	font-style: italic;
+}
+
 /* -------------------- flashes -------------------- */
 
 .global__flash{
