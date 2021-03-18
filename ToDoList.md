@@ -56,3 +56,7 @@
 - update study project
 - update README
 - add lesson 7
+- update study project
+- update gitignore
+- update README
+- add lesson 8
