@@ -47,3 +47,12 @@
 - update study project
 - update README
 - add lesson 6
+
+
+## 18.04.2021
+
+*Sergo*
+
+- update study project
+- update README
+- add lesson 7
