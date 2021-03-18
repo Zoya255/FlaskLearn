@@ -57,10 +57,15 @@ class EditProfileForm(FlaskForm):
 	                                 validators = [ DataRequired() ] )
 	submit      = SubmitField( "Apply" )
 
-	def validate_login( self, login ):
-		user = User.query.filter_by( login = login.data ).first()
-		if user is not None:
-			raise ValidationError("Please use a different login")
+	def __init__(self, orig_login, *args, **kwargs):
+		super( EditProfileForm, self ).__init__(*args, **kwargs)
+		self.orig_login = orig_login
 
-		if re.search( '\W', login.data ):
-			raise ValidationError( "Use only A-Z, a-z, 0-9 and _" )
+	def validate_login( self, login ):
+		if login.data != self.orig_login:
+			user = User.query.filter_by( login = login.data ).first()
+			if user is not None:
+				raise ValidationError("Please use a different login")
+
+			if re.search( '\W', login.data ):
+				raise ValidationError( "Use only A-Z, a-z, 0-9 and _" )

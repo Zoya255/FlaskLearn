@@ -41,6 +41,8 @@ def login():
 		if not next_page or url_parse( next_page ).netloc != '':
 			next_page = url_for( "index" )
 
+		app.logger.info( f'LOGIN    | success login user {user.login}' )
+
 		return redirect( next_page )
 
 	return render_template( "login.html", title = 'Вход в систему', form = form )
@@ -62,6 +64,7 @@ def register():
 		db.session.commit()
 
 		flash( "Congratulations, you are now a registered user!" )
+		app.logger.info( f'REGISTER | success registered user {user.login}' )
 		return redirect( url_for("login") )
 
 	return render_template( "register.html", title = 'Регистрация', form = form )
@@ -69,6 +72,7 @@ def register():
 
 @app.route('/logout')
 def logout():
+	app.logger.info( f'LOGOUT   | success logout user {current_user.login}' )
 	logout_user()
 	return redirect( url_for( "index" ) )
 
@@ -87,7 +91,7 @@ def user(login):
 @app.route('/edit_profile', methods = ['GET', 'POST'])
 @login_required
 def edit_profile():
-	form = EditProfileForm()
+	form = EditProfileForm(current_user.login)
 
 	if form.validate_on_submit():
 		current_user.login       = form.login.data
