@@ -40,7 +40,7 @@
 - add lesson 5
 
 
-## 15.04.2021
+## 15.03.2021
 
 *Sergo*
 
@@ -49,7 +49,7 @@
 - add lesson 6
 
 
-## 18.04.2021
+## 18.03.2021
 
 *Sergo*
 
@@ -60,3 +60,12 @@
 - update gitignore
 - update README
 - add lesson 8
+
+
+## 19.03.2021
+
+*Sergo*
+
+- update study project
+- update README
+- update gitignore
