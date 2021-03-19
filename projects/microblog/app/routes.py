@@ -80,7 +80,7 @@ def logout():
 # ------------------------ functional pages ------------------------ #
 
 
-@app.route('/user/<login>')
+@app.route('/user/<string:login>')
 def user(login):
 	user = User.query.filter_by( login = login ).first_or_404()
 	posts = Post.query.filter_by( id_user = user.id ).all()
@@ -115,6 +115,44 @@ def edit_profile():
 
 
 # ------------------------ api pages ------------------------ #
+
+
+@app.route('/api/follow/<string:login>')
+def follow(login):
+	user = User.query.filter_by( login = login ).first()
+
+	if user is None:
+		flash( f"User {login} not found" )
+		return redirect( url_for( "index" ) )
+
+	if user == current_user:
+		flash( f"You connect follow yourself" )
+		return redirect( url_for( "user", login = login ) )
+
+	current_user.follow(user)
+	db.session.commit()
+
+	flash( f"You are following {login}" )
+	return redirect( url_for( "user", login = login ) )
+
+
+@app.route('/api/unfollow/<string:login>')
+def unfollow(login):
+	user = User.query.filter_by( login = login ).first()
+
+	if user is None:
+		flash( f"User {login} not found" )
+		return redirect( url_for( "index" ) )
+
+	if user == current_user:
+		flash( f"You connect unfollow yourself" )
+		return redirect( url_for( "user", login = login ) )
+
+	current_user.unfollow(user)
+	db.session.commit()
+
+	flash( f"You are not unfollow {login}" )
+	return redirect( url_for( "user", login = login ) )
 
 
 # ------------------------ test pages ------------------------ #
