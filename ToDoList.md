@@ -69,3 +69,13 @@
 - update study project
 - update README
 - update gitignore
+
+
+## 20.03.2021
+
+*Sergo*
+
+- add lesson 9
+- update study project
+- update README
+- add lesson 10
