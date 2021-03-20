@@ -69,3 +69,9 @@ class EditProfileForm(FlaskForm):
 
 			if re.search( '\W', login.data ):
 				raise ValidationError( "Use only A-Z, a-z, 0-9 and _" )
+
+
+class AddPostForm(FlaskForm):
+	title   = StringField( "Title", validators = [ DataRequired(), Length( min = 10, max = 50 ) ] )
+	message = TextAreaField( "Message", validators = [ DataRequired(), Length( min = 20, max = 256 ) ] )
+	submit  = SubmitField( "Publish" )

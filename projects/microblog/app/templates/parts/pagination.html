@@ -1,0 +1,15 @@
+<div class="parts__pagination">
+
+	{% if prev_url %}
+
+		<a class="parts__pagination-prev" href="{{ prev_url }}">< Новее</a>
+
+	{% endif %}
+
+	{% if next_url %}
+
+		<a class="parts__pagination-next" href="{{ next_url }}">Старше ></a>
+
+	{% endif %}
+
+</div>

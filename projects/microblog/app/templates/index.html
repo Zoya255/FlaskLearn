@@ -10,18 +10,14 @@
 
 {% block content %}
 
-	<h2>Представленные статьи:</h2>
+	<h2>Представленные посты:</h2>
 
 	{% for post in posts %}
 
-		<div class="global__post">
-			<h3 class="global__post-title">{{ post.title }}</h3>
-
-			<p>{{ post.message }}</p>
-
-			<span class="global__post-author"><a href="/user/{{ post.author }}">by {{ post.author }}</a></span>
-		</div>
+		{% include "parts/post.html" %}
 
 	{% endfor %}
+
+	{% include "parts/pagination.html" %}
 
 {% endblock %}

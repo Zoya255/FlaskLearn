@@ -33,7 +33,7 @@ class User(UserMixin, db.Model):
 								backref = db.backref( 'followers', lazy = "dynamic" ), lazy = "dynamic" )
 
 	def __repr__(self):
-		return f'{self.login}'
+		return f'<user {self.login}>'
 
 	def set_password( self, password ):
 		self.pass_hash = generate_password_hash(password)
@@ -82,3 +82,23 @@ class Post(db.Model):
 
 	def __repr__(self):
 		return f'<Post {self.title}>'
+
+	def get_author( self ):
+		author = User.query.get( self.id_user )
+		return author.login
+
+	def get_author_avatar( self, size ):
+		author = User.query.get( self.id_user )
+
+		if author.avatar_image == 0:
+			return None
+		elif author.avatar_image is None:
+			return url_for( 'static', filename = f"avatars/{size}/default_15.png" )
+		else:
+			return url_for( 'static', filename = f"avatars/{size}/default_{author.avatar_image}.png" )
+
+	def get_posts( self, user = None ):
+		if user:
+			return Post.query.filter_by( id_user = user.id ).order_by( Post.datetime_add.desc() )
+		else:
+			return Post.query.order_by( Post.datetime_add.desc() )

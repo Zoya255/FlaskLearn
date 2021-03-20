@@ -1,0 +1,9 @@
+<div class="parts__user">
+	<div class="parts__user-avatar">
+		<img class="parts__user-avatar-image" src="{{ user.avatar(64) }}" alt="{{ user.login }}`s avatar">
+	</div>
+
+	<h3 class="parts__user-login"><a href="{{ url_for( "user", login = user.login ) }}">{{ user.login }}</a></h3>
+
+	<p class="parts__user-name">{{ user.name }} {{ user.lastname }}</p>
+</div>

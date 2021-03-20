@@ -43,8 +43,20 @@
 
 			<p class="user__section-main-date"><b>Дата регистрации: </b>{{ user.datetime_reg }}</p>
 
-			<p><b>Подписчиков: </b>{{ user.followers.count() }}</p>
-			<p><b>Подписок: </b>{{ user.followed.count() }}</p>
+			<p>
+				<b><a href="{{ url_for( 'user', login = user.login ) }}">Постов: </a></b>
+				{{ user.posts.count() }}
+			</p>
+
+			<p>
+				<b><a href="{{ url_for( 'user_followers', login = user.login ) }}">Подписчиков: </a></b>
+				{{ user.followers.count() }}
+			</p>
+
+			<p>
+				<b><a href="{{ url_for( 'user_followed', login = user.login ) }}">Подписок: </a></b>
+				{{ user.followed.count() }}
+			</p>
 
 			{% if user == current_user %}
 				<p><a href="{{ url_for( 'edit_profile' ) }}">Редактировать профиль</a></p>
@@ -56,26 +68,12 @@
 		</div>
 	</section>
 
-	<section class="user__section-posts">
-		<h2>Все посты пользователя {{ user.name }}:</h2>
+	<section class="user__section-data">
 
-		{% if posts %}
-			{% for post in posts %}
+		{% block user_data %}{% endblock %}
 
-				<div class="global__post">
-					<h3 class="global__post-title">{{ post.title }}</h3>
+		{% include "parts/pagination.html" %}
 
-					<p>{{ post.message }}</p>
-
-					<span class="global__post-author">by {{ post.author }}</span>
-				</div>
-
-			{% endfor %}
-		{% else %}
-
-			<h3>Постов нет</h3>
-
-		{% endif %}
 	</section>
 
 {% endblock %}

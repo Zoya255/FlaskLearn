@@ -79,22 +79,6 @@ code{
 	font-size: 1.15em;
 }
 
-/* -------------------- posts -------------------- */
-
-.global__post{
-	padding: 0 20px 10px;
-	margin-bottom: 20px;
-
-	width: 50%;
-
-	border: 1px solid #666666;
-}
-.global__post-title{
-	font-family: Comfortaa, cursive;
-}
-.global__post-author{
-	font-style: italic;
-}
 
 /* -------------------- flashes -------------------- */
 

@@ -1,21 +1,53 @@
 from flask import render_template, request, send_from_directory, flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, AddPostForm
 from app.models import User, Post
 from werkzeug.urls import url_parse
 from datetime import datetime
 
 
-# ------------------------ main page ------------------------ #
+# ------------------------ main pages ------------------------ #
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-	posts = Post.query.all()
+	page  = request.args.get( 'page', 1, type = int )
+	posts = Post().get_posts().paginate( page, app.config['POSTS_PER_PAGE'], False )
 
-	return render_template( "index.html", title = 'Главная', posts = posts )
+	if posts.has_next:
+		next_url = url_for( "index", page = posts.next_num )
+	else:
+		next_url = None
+
+	if posts.has_prev:
+		prev_url = url_for( "index", page = posts.prev_num )
+	else:
+		prev_url = None
+
+	return render_template( "index.html", title = 'Главная', posts = posts.items,
+	                                      next_url = next_url, prev_url = prev_url )
+
+
+@app.route('/feed')
+@login_required
+def feed():
+	page = request.args.get( 'page', 1, type = int )
+	posts = current_user.followed_posts().paginate( page, app.config['POSTS_PER_PAGE'], False )
+
+	if posts.has_next:
+		next_url = url_for( "index", page = posts.next_num )
+	else:
+		next_url = None
+
+	if posts.has_prev:
+		prev_url = url_for( "index", page = posts.prev_num )
+	else:
+		prev_url = None
+
+	return render_template( "index.html", title = 'Лента', posts = posts.items,
+	                                      next_url = next_url, prev_url = prev_url )
 
 
 # ------------------------ login system ------------------------ #
@@ -82,10 +114,62 @@ def logout():
 
 @app.route('/user/<string:login>')
 def user(login):
+	page = request.args.get( 'page', 1, type = int )
 	user = User.query.filter_by( login = login ).first_or_404()
-	posts = Post.query.filter_by( id_user = user.id ).all()
+	posts = Post().get_posts(user).paginate( page, app.config['POSTS_PER_PAGE'], False )
 
-	return render_template( "user.html", title = f'{login}', user = user, posts = posts )
+	if posts.has_next:
+		next_url = url_for( "index", page = posts.next_num )
+	else:
+		next_url = None
+
+	if posts.has_prev:
+		prev_url = url_for( "index", page = posts.prev_num )
+	else:
+		prev_url = None
+
+	return render_template( "user_posts.html", title = f'{login}', user = user, posts = posts.items,
+	                                           next_url = next_url, prev_url = prev_url )
+
+
+@app.route('/user/<string:login>/followers')
+def user_followers(login):
+	page = request.args.get( 'page', 1, type = int )
+	user = User.query.filter_by( login = login ).first_or_404()
+	followers = user.followers.paginate( page, app.config['POSTS_PER_PAGE'], False )
+
+	if followers.has_next:
+		next_url = url_for( "index", page = followers.next_num )
+	else:
+		next_url = None
+
+	if followers.has_prev:
+		prev_url = url_for( "index", page = followers.prev_num )
+	else:
+		prev_url = None
+
+	return render_template( "user_followers.html", title = f'{login}', user = user, followers = followers.items,
+	                                               next_url = next_url, prev_url = prev_url )
+
+
+@app.route( '/user/<string:login>/followed' )
+def user_followed(login):
+	page = request.args.get( 'page', 1, type = int )
+	user = User.query.filter_by( login = login ).first_or_404()
+	followed = user.followed.paginate( page, app.config['POSTS_PER_PAGE'], False )
+
+	if followed.has_next:
+		next_url = url_for( "index", page = followed.next_num )
+	else:
+		next_url = None
+
+	if followed.has_prev:
+		prev_url = url_for( "index", page = followed.prev_num )
+	else:
+		prev_url = None
+
+	return render_template( "user_followed.html", title = f'{login}', user = user, followed = followed.items,
+	                                              next_url = next_url, prev_url = prev_url )
 
 
 @app.route('/edit_profile', methods = ['GET', 'POST'])
@@ -112,6 +196,21 @@ def edit_profile():
 		form.sex.data         = current_user.sex
 
 	return render_template( "settings.html", title = 'Изменение профиля', form = form )
+
+
+@app.route('/add_post', methods = ['GET', 'POST'])
+@login_required
+def add_post():
+	form = AddPostForm()
+
+	if form.validate_on_submit():
+		post = Post( id_user = current_user.id, title = form.title.data, message = form.message.data )
+		db.session.add(post)
+		db.session.commit()
+		flash("Your post already on site")
+		return redirect( url_for( 'index' ) )
+
+	return render_template( "add_post.html", title = 'Новый пост', form = form )
 
 
 # ------------------------ api pages ------------------------ #

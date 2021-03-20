@@ -1,0 +1,92 @@
+/* ------------------------------- parts ------------------------------- */
+
+/* -------------------- post -------------------- */
+
+.parts__post{
+	padding: 10px 20px 10px;
+	margin-bottom: 20px;
+
+	width: 50%;
+
+	border: 1px solid #666666;
+}
+.parts__post-avatar{
+	display: block;
+	height: 100%;
+
+	float: left;
+
+	padding-right: 20px;
+}
+.parts__post-avatar-image{
+	display: block;
+	border-radius: 50%;
+}
+.parts__post-title{
+	margin: 5px 0;
+
+	font-family: Comfortaa, cursive;
+}
+.parts__post-message{
+	margin: 10px 0 10px;
+}
+.parts__post-author{
+	font-style: italic;
+}
+.parts__post-author-link{
+
+}
+
+/* -------------------- user -------------------- */
+
+.parts__user{
+	padding: 10px 20px 20px;
+	margin-bottom: 20px;
+
+	width: 25%;
+
+	border: 1px solid #666666;
+	clear: both;
+}
+.parts__user-avatar{
+	float: left;
+
+	padding-right: 20px;
+}
+.parts__user-avatar-image{
+	border-radius: 50%;
+}
+.parts__user-login{
+	margin: 5px 0;
+
+	font-family: Comfortaa, cursive;
+}
+.parts__user-name{
+	margin: 5px 0 10px;
+}
+
+/* -------------------- pagination -------------------- */
+
+.parts__pagination{
+	padding: 10px 0;
+}
+.parts__pagination-prev{
+	padding: 6px 10px 5px 20px;
+
+	background-color: rgba(255,255,255,.1);
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+}
+.parts__pagination-prev:hover{
+	background-color: rgba(255,255,255,.2);
+}
+.parts__pagination-next{
+	padding: 6px 20px 5px 10px;
+
+	background-color: rgba(255,255,255,.1);
+	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+.parts__pagination-next:hover{
+	background-color: rgba(255,255,255,.2);
+}

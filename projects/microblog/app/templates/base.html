@@ -9,6 +9,7 @@
 		<link rel="icon" href="{{ url_for( 'static', filename = 'favicon.ico' ) }}" type="image/x-icon">
 
 		<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/min/global.min.css' ) }}">
+		<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/min/parts.min.css' ) }}">
 		<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/min/highlight.min.css' ) }}">
 
 		{% block links %}{% endblock %}
@@ -20,17 +21,20 @@
 
 			<nav class="global__nav">
 				<a class="global__nav-link" href="{{ url_for("index") }}">home</a>
-				|
+
 				{% if current_user.is_authenticated %}
-					<a class="global__nav-link" href="{{ url_for("logout") }}">logout</a>
+					<a class="global__nav-link" href="{{ url_for("feed") }}">news feed</a>
 					|
-					<a class="global__nav-link" href="/user/{{ current_user.login }}">about me</a>
-					<a class="global__nav-link" href="{{ url_for("edit_profile") }}">settings</a>
+					<a class="global__nav-link" href="{{ url_for("add_post") }}">add post</a>
+					<a class="global__nav-link" href="{{ url_for('user', login = current_user.login) }}">about me</a>
+					<a class="global__nav-link" href="{{ url_for("edit_profile") }}">edit profile</a>
+					|
+					<a class="global__nav-link" href="{{ url_for("logout") }}">logout</a>
 				{% else %}
+					|
 					<a class="global__nav-link" href="{{ url_for("login")    }}">login</a>
 					<a class="global__nav-link" href="{{ url_for("register") }}">register</a>
 				{% endif %}
-				|
 				<a class="global__nav-link" href="/info">info</a>
 				<a class="global__nav-link" href="/test">test</a>
 			</nav>

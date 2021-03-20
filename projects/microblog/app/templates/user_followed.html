@@ -1,0 +1,20 @@
+{% extends "user_base.html" %}
+
+
+{% block user_data %}
+
+	<h2>Все подписки пользователя {{ user.name }}:</h2>
+
+		{% if followed %}
+			{% for user in followed %}
+
+				{% include "parts/user.html" %}
+
+			{% endfor %}
+		{% else %}
+
+			<h3>Подписок нет</h3>
+
+		{% endif %}
+
+{% endblock %}
