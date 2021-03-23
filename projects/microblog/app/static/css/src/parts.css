@@ -36,6 +36,11 @@
 .parts__post-author-link{
 
 }
+.parts__post-date{
+	float: right;
+
+	color: #999999;
+}
 
 /* -------------------- user -------------------- */
 

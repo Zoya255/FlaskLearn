@@ -1,6 +1,6 @@
 from flask import render_template, request, send_from_directory, flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
-from app import app, db
+from app import app, db, moment
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, AddPostForm,\
 	ResetPasswordRequestForm, ResetPasswordForm
 from app.models import User, Post

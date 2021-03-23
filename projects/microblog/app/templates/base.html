@@ -13,6 +13,10 @@
 		<link rel="stylesheet" href="{{ url_for( 'static', filename = 'css/min/highlight.min.css' ) }}">
 
 		{% block links %}{% endblock %}
+
+		{{ moment.include_jquery() }}
+		{{ moment.include_moment() }}
+		{{ moment.locale("ru") }}
 	</head>
 
 	<body class="global__body">
