@@ -3,6 +3,7 @@ from datetime import datetime
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from app.tokens import Tokens
 
 
 class Followers(db.Model):
@@ -67,10 +68,22 @@ class User(UserMixin, db.Model):
 		own = Post.query.filter_by( id_user = self.id )
 		return followed.union(own).order_by( Post.datetime_add.desc() )
 
+	def get_reset_password_token( self ):
+		t = Tokens()
+		return t.encode( { "task": "reset_password", "id": self.id  } )
+
+	@staticmethod
+	def verify_reset_password_token( token ):
+		t = Tokens()
+		data = t.decode( token )
+
+		if data["task"] == "reset_password":
+			return User.query.get( data["id"] )
+
 
 @login.user_loader
-def load_user(id):
-	return User.query.get(int(id))
+def load_user( id ):
+	return User.query.get( int( id ) )
 
 
 class Post(db.Model):
@@ -97,7 +110,8 @@ class Post(db.Model):
 		else:
 			return url_for( 'static', filename = f"avatars/{size}/default_{author.avatar_image}.png" )
 
-	def get_posts( self, user = None ):
+	@staticmethod
+	def get_posts( user = None ):
 		if user:
 			return Post.query.filter_by( id_user = user.id ).order_by( Post.datetime_add.desc() )
 		else:

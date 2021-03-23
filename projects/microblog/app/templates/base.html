@@ -35,13 +35,16 @@
 					<a class="global__nav-link" href="{{ url_for("login")    }}">login</a>
 					<a class="global__nav-link" href="{{ url_for("register") }}">register</a>
 				{% endif %}
+				|
 				<a class="global__nav-link" href="/info">info</a>
 				<a class="global__nav-link" href="/test">test</a>
 			</nav>
 
-			<span class="global__header-delimiter">|</span>
+			{% if current_user.is_authenticated %}
+				<span class="global__header-delimiter">|</span>
 
-			<span class="global__header-user">{{ current_user.name }}</span>
+				<span class="global__header-user">{{ current_user.name }}</span>
+			{% endif %}
 		</header>
 
 		<hr>

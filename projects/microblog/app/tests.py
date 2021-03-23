@@ -1,9 +1,9 @@
-from datetime import datetime, timedelta
 import pytest
 import os
 from app import app, db
 from app.models import User, Post
-from app.functions import Generators
+from app.generators import Generators
+from app.tokens import Tokens
 
 
 DROP  = True
@@ -37,6 +37,24 @@ def test_password_hash():
 		assert u.check_password( password )
 
 
+def test_tokens():
+	g = Generators()
+	t = Tokens()
+
+	for i in range( ITER ):
+		str1 = g.random_string( 4, 2 )
+		str2 = g.random_string( 4, 2 )
+
+		token = t.encode( { str1 : str2 } )
+		data  = t.decode( token )
+
+		if PRINT:
+			print( token )
+			print( data )
+
+		assert data[str1] == str2
+
+
 def test_users_create():
 	g = Generators()
 
@@ -61,6 +79,16 @@ def test_user_select():
 			print( i, User.query.get( i ) )
 		else:
 			User.query.get( i )
+
+
+def test_users_tokens():
+	g = Generators()
+
+	for i in range( 1, ITER + 1 ):
+		user  = User.query.get( i )
+		token = user.get_reset_password_token()
+
+		assert User.verify_reset_password_token( token ) == user
 
 
 def test_posts_create():
@@ -124,5 +152,3 @@ def test_follow_posts_select():
 
 		if PRINT:
 			print( u.followed_posts().all() )
-
-

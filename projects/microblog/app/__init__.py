@@ -3,19 +3,40 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_mail import Mail
 
 from datetime import datetime
-from logging import Formatter, FileHandler, INFO
+from logging import Formatter, FileHandler, INFO, ERROR
+from logging.handlers import SMTPHandler
 import os
+
+# ====== CONFIGS ======
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
+mail = Mail(app)
 
 app.jinja_env.auto_reload = True
-app.config['TEMPLATES_AUTO_RELOAD'] = True
+
+# ====== MAIL ======
+
+mail_handler = SMTPHandler(
+	mailhost    = ( app.config['MAIL_SERVER'], app.config['MAIL_PORT'] ),
+	fromaddr    = "MicroBlog <error@microblog.com>",
+	toaddrs     = app.config['ADMIN_EMAILS'],
+	subject     = "MicroBlog | Error",
+	credentials = ( app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD'] )
+)
+mail_handler.setLevel( ERROR )
+
+app.logger.addHandler( mail_handler )
+app.logger.setLevel( ERROR )
+
+# ====== LOGS ======
 
 if not os.path.exists('logs'):
 	os.mkdir('logs')
@@ -30,6 +51,7 @@ file_handler.setFormatter( file_formatter )
 
 app.logger.addHandler( file_handler )
 app.logger.setLevel( INFO )
+
 app.logger.info( 'SYSTEM   | Microblog startup' )
 
 from app import routes, models

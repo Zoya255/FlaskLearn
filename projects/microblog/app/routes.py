@@ -1,10 +1,13 @@
 from flask import render_template, request, send_from_directory, flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, AddPostForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, AddPostForm,\
+	ResetPasswordRequestForm, ResetPasswordForm
 from app.models import User, Post
 from werkzeug.urls import url_parse
 from datetime import datetime
+from app.emails import send_email, send_password_reset_email
+from app.paginate import is_pages
 
 
 # ------------------------ main pages ------------------------ #
@@ -16,18 +19,9 @@ def index():
 	page  = request.args.get( 'page', 1, type = int )
 	posts = Post().get_posts().paginate( page, app.config['POSTS_PER_PAGE'], False )
 
-	if posts.has_next:
-		next_url = url_for( "index", page = posts.next_num )
-	else:
-		next_url = None
+	next_url, prev_url = is_pages( posts, "index" )
 
-	if posts.has_prev:
-		prev_url = url_for( "index", page = posts.prev_num )
-	else:
-		prev_url = None
-
-	return render_template( "index.html", title = 'Главная', posts = posts.items,
-	                                      next_url = next_url, prev_url = prev_url )
+	return render_template( "index.html", title = 'Главная', posts = posts.items, next_url = next_url, prev_url = prev_url )
 
 
 @app.route('/feed')
@@ -36,18 +30,9 @@ def feed():
 	page = request.args.get( 'page', 1, type = int )
 	posts = current_user.followed_posts().paginate( page, app.config['POSTS_PER_PAGE'], False )
 
-	if posts.has_next:
-		next_url = url_for( "index", page = posts.next_num )
-	else:
-		next_url = None
+	next_url, prev_url = is_pages( posts, "feed" )
 
-	if posts.has_prev:
-		prev_url = url_for( "index", page = posts.prev_num )
-	else:
-		prev_url = None
-
-	return render_template( "index.html", title = 'Лента', posts = posts.items,
-	                                      next_url = next_url, prev_url = prev_url )
+	return render_template( "index.html", title = 'Лента', posts = posts.items, next_url = next_url, prev_url = prev_url )
 
 
 # ------------------------ login system ------------------------ #
@@ -88,8 +73,7 @@ def register():
 	form = RegistrationForm()
 
 	if form.validate_on_submit():
-		user = User( login = form.login.data, email = form.email.data,
-		             name = form.name.data, lastname = form.lastname.data )
+		user = User( login = form.login.data, email = form.email.data, name = form.name.data, lastname = form.lastname.data )
 		user.set_password( password = form.password.data )
 
 		db.session.add(user)
@@ -118,15 +102,7 @@ def user(login):
 	user = User.query.filter_by( login = login ).first_or_404()
 	posts = Post().get_posts(user).paginate( page, app.config['POSTS_PER_PAGE'], False )
 
-	if posts.has_next:
-		next_url = url_for( "index", page = posts.next_num )
-	else:
-		next_url = None
-
-	if posts.has_prev:
-		prev_url = url_for( "index", page = posts.prev_num )
-	else:
-		prev_url = None
+	next_url, prev_url = is_pages( posts, "user", login = login )
 
 	return render_template( "user_posts.html", title = f'{login}', user = user, posts = posts.items,
 	                                           next_url = next_url, prev_url = prev_url )
@@ -138,15 +114,7 @@ def user_followers(login):
 	user = User.query.filter_by( login = login ).first_or_404()
 	followers = user.followers.paginate( page, app.config['POSTS_PER_PAGE'], False )
 
-	if followers.has_next:
-		next_url = url_for( "index", page = followers.next_num )
-	else:
-		next_url = None
-
-	if followers.has_prev:
-		prev_url = url_for( "index", page = followers.prev_num )
-	else:
-		prev_url = None
+	next_url, prev_url = is_pages( followers, "user_followers", login = login )
 
 	return render_template( "user_followers.html", title = f'{login}', user = user, followers = followers.items,
 	                                               next_url = next_url, prev_url = prev_url )
@@ -158,15 +126,7 @@ def user_followed(login):
 	user = User.query.filter_by( login = login ).first_or_404()
 	followed = user.followed.paginate( page, app.config['POSTS_PER_PAGE'], False )
 
-	if followed.has_next:
-		next_url = url_for( "index", page = followed.next_num )
-	else:
-		next_url = None
-
-	if followed.has_prev:
-		prev_url = url_for( "index", page = followed.prev_num )
-	else:
-		prev_url = None
+	next_url, prev_url = is_pages( followed, "user_followed", login = login )
 
 	return render_template( "user_followed.html", title = f'{login}', user = user, followed = followed.items,
 	                                              next_url = next_url, prev_url = prev_url )
@@ -217,6 +177,7 @@ def add_post():
 
 
 @app.route('/api/follow/<string:login>')
+@login_required
 def follow(login):
 	user = User.query.filter_by( login = login ).first()
 
@@ -236,6 +197,7 @@ def follow(login):
 
 
 @app.route('/api/unfollow/<string:login>')
+@login_required
 def unfollow(login):
 	user = User.query.filter_by( login = login ).first()
 
@@ -254,11 +216,54 @@ def unfollow(login):
 	return redirect( url_for( "user", login = login ) )
 
 
+@app.route( '/api/reset_password_request', methods = ['GET', 'POST'] )
+def reset_password_request():
+	if current_user.is_authenticated:
+		return redirect( url_for( "index" ) )
+
+	form = ResetPasswordRequestForm()
+
+	if form.validate_on_submit():
+		user = User.query.filter_by( email = form.email.data ).first()
+
+		if user:
+			send_password_reset_email(user)
+
+		flash( "Check your email" )
+		return redirect( url_for( "login" ) )
+
+	return render_template( "reset_password_request.html", form = form )
+
+
+@app.route( '/api/reset_password/<token>', methods = [ 'GET', 'POST' ] )
+def reset_password(token):
+	if current_user.is_authenticated:
+		return redirect( url_for( "index" ) )
+
+	user = User.verify_reset_password_token(token)
+
+	if not user:
+		flash( "Invalid token" )
+		return redirect( url_for( "index" ) )
+
+	form = ResetPasswordForm()
+
+	if form.validate_on_submit():
+		user.set_password( form.password.data )
+		db.session.commit()
+		flash( "Your password has been reset" )
+		return redirect( url_for( "login" ) )
+
+	return render_template( "reset_password.html", form = form )
+
+
 # ------------------------ test pages ------------------------ #
 
 
 @app.route('/test')
 def request_data():
+	send_email( "test", "MicroBlog <admin@microblog.com>", app.config["ADMIN_EMAILS"], "text", "<h1>html</h1>" )
+
 	return render_template( "test.html", title = 'Тест' )
 
 
