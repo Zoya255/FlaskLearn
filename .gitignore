@@ -1,8 +1,8 @@
 **/__pycache__
+**/.idea
+**/logs
 projects/microblog/.coverage
 projects/microblog/.env
 projects/microblog/.hidden
-projects/microblog/.idea/
 projects/microblog/htmlcov/
-projects/microblog/logs/
 projects/microblog/venv/
