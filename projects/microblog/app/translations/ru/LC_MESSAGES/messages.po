@@ -1,0 +1,451 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+# Sergo <codeoon@mail.ru>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-03-30 17:22+1000\n"
+"PO-Revision-Date: 2021-03-30 17:22+1000\n"
+"Last-Translator: Sergo <codeoon@mail.ru>\n"
+"Language: ru\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+"X-Generator: Lokalize 20.12.3\n"
+
+#: app/forms.py:11 app/forms.py:18 app/forms.py:54
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: app/forms.py:12 app/forms.py:22 app/forms.py:93
+msgid "Password"
+msgstr "Пароль"
+
+#: app/forms.py:13
+msgid "Remember Me"
+msgstr "Запомнить меня"
+
+#: app/forms.py:14 app/templates/login.html:13
+msgid "Sign In"
+msgstr "Авторизация"
+
+#: app/forms.py:19 app/forms.py:55
+msgid "Name"
+msgstr "Имя"
+
+#: app/forms.py:20 app/forms.py:56
+msgid "Lastname"
+msgstr "Фамилия"
+
+#: app/forms.py:21 app/forms.py:83
+msgid "Email"
+msgstr "Эл. почта"
+
+#: app/forms.py:23
+msgid "Repeat password"
+msgstr "Повтор пароля"
+
+#: app/forms.py:24 app/templates/register.html:13
+msgid "Register"
+msgstr "Регистрация"
+
+#: app/forms.py:29 app/forms.py:70
+msgid "Please use a different login"
+msgstr "Пожалуйста, используйте другой логин"
+
+#: app/forms.py:32 app/forms.py:73
+msgid "Use only A-Z, a-z, 0-9 and _"
+msgstr "Используйте только буквы A-Z, a-z, цифры 0-9 и _"
+
+#: app/forms.py:37
+msgid "Please use a different email"
+msgstr "Пожалуйста используйте другую эл. почту"
+
+#: app/forms.py:41 app/forms.py:99
+msgid "Use letter in password"
+msgstr "Используйте буквы в пароле"
+
+#: app/forms.py:44 app/forms.py:102
+msgid "Use number in password"
+msgstr "Используйте цифры в пароле"
+
+#: app/forms.py:47 app/forms.py:105
+msgid "Use capital in password"
+msgstr "Используйте заглавные буквы в пароле"
+
+#: app/forms.py:50 app/forms.py:108
+msgid "Use special chars in password"
+msgstr "Используйте специальные символы в пароле"
+
+#: app/forms.py:57
+msgid "Description"
+msgstr "Описание"
+
+#: app/forms.py:58
+msgid "Sex"
+msgstr "Пол"
+
+#: app/forms.py:58 app/templates/user_base.html:26
+msgid "Male"
+msgstr "Мужской"
+
+#: app/forms.py:58 app/templates/user_base.html:32
+msgid "Female"
+msgstr "Женский"
+
+#: app/forms.py:58
+msgid "None"
+msgstr "Не определено"
+
+#: app/forms.py:60
+msgid "Apply"
+msgstr "Принять"
+
+#: app/forms.py:77
+msgid "Title"
+msgstr "Заголовок"
+
+#: app/forms.py:78
+msgid "Message"
+msgstr "Сообщение"
+
+#: app/forms.py:79
+msgid "Publish"
+msgstr "Опубликовать"
+
+#: app/forms.py:84 app/forms.py:95 app/routes.py:261
+#: app/templates/reset_password.html:13
+msgid "Reset Password"
+msgstr "Сброс пароля"
+
+#: app/forms.py:89
+msgid "This email is not exist"
+msgstr "Эта эл. почта не существует"
+
+#: app/forms.py:94
+msgid "Repeat Password"
+msgstr "Повтор пароля"
+
+#: app/routes.py:26
+msgid "Main page"
+msgstr "Главная страница"
+
+#: app/routes.py:37
+msgid "News feed"
+msgstr "Новостная лента"
+
+#: app/routes.py:54
+msgid "Invalid login or password"
+msgstr "Неправильные логин или пароль"
+
+#: app/routes.py:63
+msgid "Congratulations, you are success login!"
+msgstr "Поздравляем, вы успешно вошли в систему!"
+
+#: app/routes.py:68
+msgid "Login"
+msgstr "Вход"
+
+#: app/routes.py:85
+msgid "Congratulations, you are now a registered user!"
+msgstr "Поздравляем, теперь вы - зарегистрированный пользователь."
+
+#: app/routes.py:90
+msgid "Registration"
+msgstr "Регистрация"
+
+#: app/routes.py:152
+msgid "Success update profile"
+msgstr "Успешное обновление профиля"
+
+#: app/routes.py:162
+msgid "Change of profile"
+msgstr "Изменение профиля"
+
+#: app/routes.py:174
+msgid "Your post already on site"
+msgstr "Ваш пост уже на сайте"
+
+#: app/routes.py:177
+msgid "New post"
+msgstr "Новый пост"
+
+#: app/routes.py:189 app/routes.py:209
+#, python-format
+msgid "User %(login)s not found"
+msgstr "Пользователь %(login)s не найден"
+
+#: app/routes.py:193
+msgid "You connect follow yourself"
+msgstr "Вы не можете подписаться на себя"
+
+#: app/routes.py:199
+#, python-format
+msgid "You are following %(login)s"
+msgstr "Вы подписались на %(login)s"
+
+#: app/routes.py:213
+msgid "You connect unfollow yourself"
+msgstr "Вы не можете отписаться от себя"
+
+#: app/routes.py:219
+#, python-format
+msgid "You are unfollow %(login)s"
+msgstr "Вы отписались от %(login)s"
+
+#: app/routes.py:236
+msgid "Check your email"
+msgstr "Проверьте вашу эл. почту"
+
+#: app/routes.py:250
+msgid "Invalid token"
+msgstr "Неправильный токен"
+
+#: app/routes.py:258
+msgid "Your password has been reset"
+msgstr "Ваш пароль был сброшен"
+
+#: app/routes.py:276
+msgid "Error 404"
+msgstr "Ошибка 404"
+
+#: app/routes.py:281
+msgid "Error 500"
+msgstr "Ошибка 500"
+
+#: app/templates/404.html:5
+msgid "Error 404: Not Found"
+msgstr "Ошибка 404: Не найдено"
+
+#: app/templates/404.html:7
+msgid "Your url:"
+msgstr "Ваш адрес:"
+
+#: app/templates/404.html:9 app/templates/500.html:7
+msgid "You may have made a mistake somewhere. Try again or"
+msgstr "Возможно, вы ошиблись. Попробуйте ещё раз или"
+
+#: app/templates/404.html:9 app/templates/500.html:7
+msgid "back to main page"
+msgstr "вернитесь на главную страницу"
+
+#: app/templates/500.html:5
+msgid "Error 500: Internal Server Error"
+msgstr "Ошибка 500: Внутренняя ошибка сервера"
+
+#: app/templates/add_post.html:13
+msgid "Write new post"
+msgstr "Написать новый пост"
+
+#: app/templates/add_post.html:20
+msgid "Title post..."
+msgstr "Заголовок поста..."
+
+#: app/templates/add_post.html:29
+msgid "Title body..."
+msgstr "Сообщение поста..."
+
+#: app/templates/base.html:7 app/templates/base.html:24
+msgid "MicroBlog"
+msgstr "МикроБлог"
+
+#: app/templates/base.html:27
+msgid "home"
+msgstr "домой"
+
+#: app/templates/base.html:30
+msgid "news feed"
+msgstr "лента"
+
+#: app/templates/base.html:32
+msgid "add post"
+msgstr "новый пост"
+
+#: app/templates/base.html:33
+msgid "about me"
+msgstr "обо мне"
+
+#: app/templates/base.html:34
+msgid "edit profile"
+msgstr "обновление профиля"
+
+#: app/templates/base.html:36
+msgid "logout"
+msgstr "выход"
+
+#: app/templates/base.html:39
+msgid "login"
+msgstr "вход"
+
+#: app/templates/base.html:40
+msgid "register"
+msgstr "регистрация"
+
+#: app/templates/base.html:63
+msgid "Notices for you:"
+msgstr "Уведомления для вас:"
+
+#: app/templates/base.html:78
+msgid "MicroBlog by SI"
+msgstr "МикроБлог от SI"
+
+#: app/templates/index.html:13
+msgid "Recent posts:"
+msgstr "Последние посты:"
+
+#: app/templates/login.html:20 app/templates/register.html:20
+#: app/templates/settings.html:20
+msgid "Username..."
+msgstr "Имя пользователя..."
+
+#: app/templates/login.html:45
+msgid "New User?"
+msgstr "Новый пользователь?"
+
+#: app/templates/login.html:47
+msgid "Click to Register!"
+msgstr "Кликни, чтобы зарегистрироваться"
+
+#: app/templates/login.html:52
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+#: app/templates/login.html:54
+msgid "Click to Reset!"
+msgstr "Кликни, чтобы сбросить"
+
+#: app/templates/register.html:29 app/templates/settings.html:29
+msgid "Name..."
+msgstr "Имя..."
+
+#: app/templates/register.html:38 app/templates/settings.html:38
+msgid "Lastname..."
+msgstr "Фамилия..."
+
+#: app/templates/register.html:47
+msgid "email@example.com..."
+msgstr "user@mail.ru"
+
+#: app/templates/reset_password_request.html:13
+msgid "Reset Password Request"
+msgstr "Запрос на сброс пароля"
+
+#: app/templates/reset_password_request.html:20
+msgid "Email..."
+msgstr "Эл. почта..."
+
+#: app/templates/settings.html:13 app/templates/user_base.html:62
+msgid "Edit profile"
+msgstr "Изменить профиль"
+
+#: app/templates/settings.html:47
+msgid "I am..."
+msgstr "Я..."
+
+#: app/templates/user_base.html:25 app/templates/user_base.html:31
+msgid "Sex:"
+msgstr "Пол:"
+
+#: app/templates/user_base.html:37
+msgid "About myself:"
+msgstr "Обо мне:"
+
+#: app/templates/user_base.html:41
+msgid "Last action:"
+msgstr "Последнее действие:"
+
+#: app/templates/user_base.html:44
+msgid "Date of registration:"
+msgstr "Дата регистрации:"
+
+#: app/templates/user_base.html:47
+msgid "Posts:"
+msgstr "Посты:"
+
+#: app/templates/user_base.html:52
+msgid "Followers:"
+msgstr "Подписчики:"
+
+#: app/templates/user_base.html:57
+msgid "Followed:"
+msgstr "Подписки:"
+
+#: app/templates/user_base.html:64
+msgid "Follow"
+msgstr "Подписаться"
+
+#: app/templates/user_base.html:66
+msgid "Unfollow"
+msgstr "Отписаться"
+
+#: app/templates/user_followed.html:6
+msgid "All followed user"
+msgstr "Все подписки пользователя"
+
+#: app/templates/user_followed.html:16
+msgid "Not followed"
+msgstr "Нет подписок"
+
+#: app/templates/user_followers.html:6
+msgid "All followers user"
+msgstr "Все подписчики пользователя"
+
+#: app/templates/user_followers.html:16
+msgid "Not followers"
+msgstr "Нет подписчиков"
+
+#: app/templates/user_posts.html:6
+msgid "All posts user"
+msgstr "Все посты пользователя"
+
+#: app/templates/user_posts.html:16
+msgid "Not posts"
+msgstr "Нет постов"
+
+#: app/templates/parts/pagination.html:5
+msgid "next"
+msgstr "новее"
+
+#: app/templates/parts/pagination.html:11
+msgid "older"
+msgstr "старше"
+
+#: app/templates/parts/post.html:14
+msgid "by"
+msgstr "от"
+
+#~ msgid "login"
+#~ msgstr ""
+
+#~ msgid "Новый пост"
+#~ msgstr ""
+
+#~ msgid "Error 404: Not found"
+#~ msgstr ""
+
+#~ msgid "Error 500: Iternal Server Error"
+#~ msgstr ""
+
+#~ msgid "Test"
+#~ msgstr "Tест"
+
+#~ msgid "It`s a very important data"
+#~ msgstr "Это очень важные данные"
+
+#~ msgid "Info"
+#~ msgstr "Информация"
+
+#~ msgid "info"
+#~ msgstr "информация"
+
+#~ msgid "test"
+#~ msgstr "тест"
+

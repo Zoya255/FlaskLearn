@@ -11,7 +11,7 @@
 	<p class="parts__post-message">{{ post.message }}</p>
 
 	<span class="parts__post-author">
-		<a class="parts__post-author-link" href="/user/{{ post.get_author() }}">by {{ post.get_author() }}</a>
+		<a class="parts__post-author-link" href="/user/{{ post.get_author() }}">{{ _("by") }} {{ post.get_author() }}</a>
 	</span>
 
 	<span class="parts__post-date">{{ moment( post.datetime_add ).fromNow() }}</span>

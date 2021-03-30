@@ -9,6 +9,7 @@ class Config(object):
 	# Hardcode values
 	POSTS_PER_PAGE = 20
 	TEMPLATES_AUTO_RELOAD = True
+	LANGUAGES = [ 'en', 'ru', 'es' ]
 
 	# Users vars
 	ADMIN_EMAILS = [ "codeoon@mail.ru", "optimazecode@gmail.com" ]

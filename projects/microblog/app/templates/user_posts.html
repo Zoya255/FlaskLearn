@@ -3,7 +3,7 @@
 
 {% block user_data %}
 
-	<h2>Все посты пользователя {{ user.name }}:</h2>
+	<h2>{{ _("All posts user") }} {{ user.name }}:</h2>
 
 		{% if posts %}
 			{% for post in posts %}
@@ -13,7 +13,7 @@
 			{% endfor %}
 		{% else %}
 
-			<h3>Постов нет</h3>
+			<h3>{{ _("Not posts") }}</h3>
 
 		{% endif %}
 

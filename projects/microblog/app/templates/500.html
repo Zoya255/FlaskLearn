@@ -2,8 +2,8 @@
 
 {% block content %}
 
-	<h2 class="error">Ошибка 500: внутренняя ошибка сервера</h2>
+	<h2 class="error">{{ _("Error 500: Internal Server Error") }}</h2>
 
-	<p>Не беспокойтесь, скоро всё наладится. Попробуйте позже, или <a href="{{ url_for('index') }}">вернитесь на главную</a>.</p>
+	<p>{{ _("You may have made a mistake somewhere. Try again or") }}<a href="{{ url_for('index') }}">{{ _("back to main page") }}</a>.</p>
 
 {% endblock %}

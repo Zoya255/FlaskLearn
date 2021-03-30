@@ -10,14 +10,14 @@
 
 {% block content %}
 
-	<h2>Register</h2>
+	<h2>{{ _("Register") }}</h2>
 
 	<form action="" method="post" novalidate>
 		{{ form.hidden_tag() }}
 
 		<p>
             {{ form.login.label }}<br>
-            {{ form.login(size=32, maxlength=32, placeholder="Username...") }}
+            {{ form.login(size=32, maxlength=32, placeholder=_("Username...") ) }}
 
 			{% for error in form.login.errors %}
             	<span class="check error">[{{ error }}]</span>
@@ -26,7 +26,7 @@
 
 		<p>
             {{ form.name.label }}<br>
-            {{ form.name(size=32, maxlength=32, placeholder="Name...") }}
+            {{ form.name(size=32, maxlength=32, placeholder=_("Name...") ) }}
 
 			{% for error in form.name.errors %}
             	<span class="check error">[{{ error }}]</span>
@@ -35,7 +35,7 @@
 
 		<p>
             {{ form.lastname.label }}<br>
-            {{ form.lastname(size=32, maxlength=32, placeholder="Lastname...") }}
+            {{ form.lastname(size=32, maxlength=32, placeholder=_("Lastname...") ) }}
 
 			{% for error in form.lastname.errors %}
             	<span class="check error">[{{ error }}]</span>
@@ -44,7 +44,7 @@
 
 		<p>
             {{ form.email.label }}<br>
-            {{ form.email(size=32, maxlength=64, placeholder="email@example.com...") }}
+            {{ form.email(size=32, maxlength=64, placeholder=_("email@example.com...") ) }}
 
 			{% for error in form.email.errors %}
             	<span class="check error">[{{ error }}]</span>

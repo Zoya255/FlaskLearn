@@ -3,7 +3,7 @@
 
 {% block user_data %}
 
-	<h2>Все подписчики пользователя {{ user.name }}:</h2>
+	<h2>{{ _("All followers user") }} {{ user.name }}:</h2>
 
 		{% if followers %}
 			{% for user in followers %}
@@ -13,7 +13,7 @@
 			{% endfor %}
 		{% else %}
 
-			<h3>Подписчиков нет</h3>
+			<h3>{{ _("Not followers") }}</h3>
 
 		{% endif %}
 

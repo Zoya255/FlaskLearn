@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<title>{{ title }} - MicroBlog</title>
+		<title>{{ title }} - {{ _("MicroBlog") }}</title>
 
 		<link rel="icon" href="{{ url_for( 'static', filename = 'favicon.ico' ) }}" type="image/x-icon">
 
@@ -16,32 +16,29 @@
 
 		{{ moment.include_jquery() }}
 		{{ moment.include_moment() }}
-		{{ moment.locale("ru") }}
+		{{ moment.locale( g.locale ) }}
 	</head>
 
 	<body class="global__body">
 		<header class="global__header">
-			<h1 class="global__header-logo">MicroBlog</h1>
+			<h1 class="global__header-logo">{{ _("MicroBlog") }}</h1>
 
 			<nav class="global__nav">
-				<a class="global__nav-link" href="{{ url_for("index") }}">home</a>
+				<a class="global__nav-link" href="{{ url_for("index") }}">{{ _("home") }}</a>
 
 				{% if current_user.is_authenticated %}
-					<a class="global__nav-link" href="{{ url_for("feed") }}">news feed</a>
+					<a class="global__nav-link" href="{{ url_for("feed") }}">{{ _("news feed") }}</a>
 					|
-					<a class="global__nav-link" href="{{ url_for("add_post") }}">add post</a>
-					<a class="global__nav-link" href="{{ url_for('user', login = current_user.login) }}">about me</a>
-					<a class="global__nav-link" href="{{ url_for("edit_profile") }}">edit profile</a>
+					<a class="global__nav-link" href="{{ url_for("add_post") }}">{{ _("add post") }}</a>
+					<a class="global__nav-link" href="{{ url_for('user', login = current_user.login) }}">{{ _("about me") }}</a>
+					<a class="global__nav-link" href="{{ url_for("edit_profile") }}">{{ _("edit profile") }}</a>
 					|
-					<a class="global__nav-link" href="{{ url_for("logout") }}">logout</a>
+					<a class="global__nav-link" href="{{ url_for("logout") }}">{{ _("logout") }}</a>
 				{% else %}
 					|
-					<a class="global__nav-link" href="{{ url_for("login")    }}">login</a>
-					<a class="global__nav-link" href="{{ url_for("register") }}">register</a>
+					<a class="global__nav-link" href="{{ url_for("login")    }}">{{ _("login") }}</a>
+					<a class="global__nav-link" href="{{ url_for("register") }}">{{ _("register") }}</a>
 				{% endif %}
-				|
-				<a class="global__nav-link" href="/info">info</a>
-				<a class="global__nav-link" href="/test">test</a>
 			</nav>
 
 			{% if current_user.is_authenticated %}
@@ -63,7 +60,7 @@
 		<hr>
 
 		<div class="global__flash">
-			<h2>Уведомления для вас:</h2>
+			<h2>{{ _("Notices for you:") }}</h2>
 
 			<ul>
 				{% for flash in flashes %}
@@ -78,7 +75,7 @@
 		<hr>
 
 		<footer class="global__footer">
-			<p>MicroBlog by SI<p>
+			<p>{{ _("MicroBlog by SI") }}<p>
 			<p>2021</p>
 		</footer>
 	</body>

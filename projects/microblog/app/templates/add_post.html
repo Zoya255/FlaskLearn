@@ -10,14 +10,14 @@
 
 {% block content %}
 
-    <h2>Write new post</h2>
+    <h2>{{ _("Write new post") }}</h2>
 
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
 
         <p>
             {{ form.title.label }}<br>
-            {{ form.title(size=32, maxlength=50, placeholder="Title post...") }}
+            {{ form.title(size=32, maxlength=50, placeholder=_("Title post...")) }}
 
 			{% for error in form.title.errors %}
             	<span class="check error">[{{ error }}]</span>
@@ -26,7 +26,7 @@
 
 		<p>
             {{ form.message.label }}<br>
-            {{ form.message(cols=40, rows=7, maxlength=256, placeholder="Title body...") }}
+            {{ form.message(cols=40, rows=7, maxlength=256, placeholder=_("Title body...")) }}
 
 			{% for error in form.message.errors %}
             	<span class="check error">[{{ error }}]</span>

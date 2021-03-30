@@ -22,48 +22,48 @@
 			<h3 class="user__section-main-name">{{ user.lastname }} {{ user.name }}</h3>
 
 			{% if (user.sex == "M") %}
-				<p class="user__section-main-sex"><b>Пол:</b>
-					Муж
+				<p class="user__section-main-sex"><b>{{ _("Sex:") }} </b>
+					{{ _("Male") }}
 				</p>
 			{% endif %}
 
 			{% if (user.sex == "F") %}
-				<p class="user__section-main-sex"><b>Пол:</b>
-					Жен
+				<p class="user__section-main-sex"><b>{{ _("Sex:") }} </b>
+					{{ _("Female") }}
 				</p>
 			{% endif %}
 
 			{% if user.description %}
-				<p class="user__section-main-desc"><b>Кратко о себе: </b>{{ user.description }}</p>
+				<p class="user__section-main-desc"><b>{{ _("About myself:") }} </b>{{ user.description }}</p>
 			{% endif %}
 
 			{% if user.datetime_last %}
-				<p class="user__section-main-last"><b>Последний вход: </b>{{ user.datetime_last }}</p>
+				<p class="user__section-main-last"><b>{{ _("Last action:") }} </b>{{ user.datetime_last }}</p>
 			{% endif %}
 
-			<p class="user__section-main-date"><b>Дата регистрации: </b>{{ user.datetime_reg }}</p>
+			<p class="user__section-main-date"><b>{{ _("Date of registration:") }} </b>{{ user.datetime_reg }}</p>
 
 			<p>
-				<b><a href="{{ url_for( 'user', login = user.login ) }}">Постов: </a></b>
+				<b><a href="{{ url_for( 'user', login = user.login ) }}">{{ _("Posts:") }} </a></b>
 				{{ user.posts.count() }}
 			</p>
 
 			<p>
-				<b><a href="{{ url_for( 'user_followers', login = user.login ) }}">Подписчиков: </a></b>
+				<b><a href="{{ url_for( 'user_followers', login = user.login ) }}">{{ _("Followers:") }} </a></b>
 				{{ user.followers.count() }}
 			</p>
 
 			<p>
-				<b><a href="{{ url_for( 'user_followed', login = user.login ) }}">Подписок: </a></b>
+				<b><a href="{{ url_for( 'user_followed', login = user.login ) }}">{{ _("Followed:") }} </a></b>
 				{{ user.followed.count() }}
 			</p>
 
 			{% if user == current_user %}
-				<p><a href="{{ url_for( 'edit_profile' ) }}">Редактировать профиль</a></p>
+				<p><a href="{{ url_for( 'edit_profile' ) }}">{{ _("Edit profile") }}</a></p>
             {% elif not current_user.is_following(user) %}
-				<p><b><a href="{{ url_for( 'follow', login = user.login ) }}">Подписаться</a></b></p>
+				<p><b><a href="{{ url_for( 'follow', login = user.login ) }}">{{ _("Follow") }}</a></b></p>
 			{% else %}
-				<p><b><a href="{{ url_for( 'unfollow', login = user.login ) }}">Отписаться</a></b></p>
+				<p><b><a href="{{ url_for( 'unfollow', login = user.login ) }}">{{ _("Unfollow") }}</a></b></p>
 			{% endif %}
 		</div>
 	</section>

@@ -10,14 +10,14 @@
 
 {% block content %}
 
-    <h2>Sign In</h2>
+    <h2>{{ _("Sign In") }}</h2>
 
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
 
         <p>
             {{ form.login.label }}<br>
-            {{ form.login(size=32, maxlength=32, placeholder="Username...") }}
+            {{ form.login(size=32, maxlength=32, placeholder=_("Username...") ) }}
 
 			{% for error in form.login.errors %}
             	<span class="check error">[{{ error }}]</span>
@@ -42,16 +42,16 @@
         </p>
 
 		<p>
-			New User?
+			{{ _("New User?") }}
 			<a href="{{ url_for('register') }}">
-				Click to Register!
+				{{ _("Click to Register!") }}
 			</a>
 		</p>
 
 		<p>
-			Forgot password?
+			{{ _("Forgot password?") }}
 			<a href="{{ url_for('reset_password_request') }}">
-				Click to Reset!
+				{{ _("Click to Reset!") }}
 			</a>
 		</p>
     </form>

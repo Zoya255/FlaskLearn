@@ -2,13 +2,13 @@
 
 	{% if prev_url %}
 
-		<a class="parts__pagination-prev" href="{{ prev_url }}">< Новее</a>
+		<a class="parts__pagination-prev" href="{{ prev_url }}">< {{ _("next") }}</a>
 
 	{% endif %}
 
 	{% if next_url %}
 
-		<a class="parts__pagination-next" href="{{ next_url }}">Старше ></a>
+		<a class="parts__pagination-next" href="{{ next_url }}">{{ _("older") }} ></a>
 
 	{% endif %}
 

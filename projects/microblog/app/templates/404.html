@@ -2,10 +2,10 @@
 
 {% block content %}
 
-	<h2 class="error">Ошибка 404: страница не найдена</h2>
+	<h2 class="error">{{ _("Error 404: Not Found") }}</h2>
 
-	<p>Ваш текущий адрес: <code>{{ request.url }}</code></p>
+	<p>{{ _("Your url:") }} <code>{{ request.url }}</code></p>
 
-	<p>Возможно, вы где-то ошиблись. Попробуйте ещё раз, или <a href="{{ url_for('index') }}">вернитесь на главную</a>.</p>
+	<p>{{ _("You may have made a mistake somewhere. Try again or") }}<a href="{{ url_for('index') }}">{{ _("back to main page") }}</a>.</p>
 
 {% endblock %}
