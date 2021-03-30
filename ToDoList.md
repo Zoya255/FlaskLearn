@@ -91,3 +91,14 @@
 - add lesson 12
 - update README
 - add lesson 13
+
+
+## 30.03.2021
+
+*Sergo*
+
+- remove unused templates
+- update gitignore
+- update study project
+- update README
+- add lesson 14
